@@ -1,0 +1,55 @@
+package com.parcial.modelo;
+
+import com.parcial.Interfaces.Magico;
+
+/**
+ * Mago: criatura mágica que ataca con hechizos.
+ * Implementa Magico y usa composición con Arma.
+ */
+public class Mago extends Criatura implements Magico {
+    private String hechizos;
+    private Arma arma;
+
+    public Mago(String nombre, int salud, int fuerza, String hechizos) {
+        super(nombre, salud, fuerza);
+        this.hechizos = hechizos;
+    }
+
+    public void equiparArma(Arma arma) {
+        this.arma = arma;
+        System.out.println(nombre + " equipó: " + arma.getNombre());
+    }
+
+    public void desequiparArma() {
+        this.arma = null;
+    }
+
+    @Override
+    public void atacar(Criatura objetivo) {
+        int daño = fuerza;
+        if (arma != null) {
+            arma.atacarConArma(objetivo);
+            daño += arma.getDañoAdicional();
+        }
+        System.out.println("🧙 " + nombre + " lanza un hechizo a " + objetivo.getNombre() + "! Daño: " + daño);
+        objetivo.defender(daño);
+    }
+
+    @Override
+    public void defender(int daño) {
+        // El mago usa un escudo mágico que reduce 10 puntos de daño
+        int dañoReducido = Math.max(0, daño - 10);
+        salud -= dañoReducido;
+        System.out.println("✨ " + nombre + " usa escudo mágico y recibe " + dañoReducido + " de daño. Salud: " + salud);
+    }
+
+    @Override
+    public void lanzarHechizo() {
+        System.out.println("🧙 " + nombre + " lanza el hechizo: " + hechizos + "!");
+    }
+
+    @Override
+    public void aprenderHechizo() {
+        System.out.println("🧙 " + nombre + " aprende un nuevo hechizo.");
+    }
+}
