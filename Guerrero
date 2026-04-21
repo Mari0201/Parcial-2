@@ -1,0 +1,39 @@
+package com.parcial.modelo;
+
+/**
+ * Guerrero: criatura que ataca con su espada.
+ * Usa composición con Arma.
+ */
+public class Guerrero extends Criatura {
+    private Arma arma;
+
+    public Guerrero(String nombre, int salud, int fuerza) {
+        super(nombre, salud, fuerza);
+    }
+
+    public void equiparArma(Arma arma) {
+        this.arma = arma;
+        System.out.println(nombre + " equipó: " + arma.getNombre());
+    }
+
+    public void desequiparArma() {
+        this.arma = null;
+    }
+
+    @Override
+    public void atacar(Criatura objetivo) {
+        int daño = fuerza;
+        if (arma != null) {
+            arma.atacarConArma(objetivo);
+            daño += arma.getDañoAdicional();
+        }
+        System.out.println("⚔️ " + nombre + " ataca a " + objetivo.getNombre() + " con su espada! Daño: " + daño);
+        objetivo.defender(daño);
+    }
+
+    @Override
+    public void defender(int daño) {
+        salud -= daño;
+        System.out.println("🛡️ " + nombre + " recibe " + daño + " de daño. Salud: " + salud);
+    }
+}
