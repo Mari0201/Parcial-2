@@ -1,0 +1,9 @@
+package com.parcial.Interfaces;
+
+/**
+ * Interfaz Magico: define comportamiento de criaturas con habilidades mágicas.
+ */
+public interface Magico {
+    void lanzarHechizo();
+    void aprenderHechizo();
+}
