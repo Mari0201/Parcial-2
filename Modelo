@@ -1,0 +1,34 @@
+package com.parcial.modelo;
+
+/**
+ * Clase principal: crea criaturas y simula batallas.
+ */
+public class Main {
+    public static void main(String[] args) {
+
+        // Crear armas
+        Arma espadaMagica = new Arma("Espada Mágica", 15);
+        Arma bastónFuego = new Arma("Bastón de Fuego", 10);
+
+        // Crear criaturas
+        Dragon dragon = new Dragon("Smaug", 200, 40, "Escamas de Acero");
+        Guerrero guerrero = new Guerrero("Arthas", 150, 30);
+        Mago mago = new Mago("Gandalf", 120, 35, "Bola de Fuego");
+
+        // Equipar armas
+        guerrero.equiparArma(espadaMagica);
+        mago.equiparArma(bastónFuego);
+
+        // El dragón vuela antes de la batalla
+        dragon.volar();
+        dragon.aterrizar();
+
+        // El mago lanza un hechizo
+        mago.lanzarHechizo();
+        mago.aprenderHechizo();
+
+        // Simular batallas
+        Batalla.simularBatalla(dragon, guerrero);
+        Batalla.simularBatalla(mago, guerrero);
+    }
+}
