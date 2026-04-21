@@ -1,0 +1,56 @@
+package com.parcial.modelo;
+
+import com.parcial.Interfaces.Volador;
+
+/**
+ * Dragon: criatura que vuela y ataca con el doble de fuerza.
+ * Implementa Volador e usa composición con Arma.
+ */
+public class Dragon extends Criatura implements Volador {
+    private String escamas;
+    private Arma arma;
+
+    public Dragon(String nombre, int salud, int fuerza, String escamas) {
+        super(nombre, salud, fuerza);
+        this.escamas = escamas;
+    }
+
+    public void equiparArma(Arma arma) {
+        this.arma = arma;
+        System.out.println(nombre + " equipó: " + arma.getNombre());
+    }
+
+    public void desequiparArma() {
+        System.out.println(nombre + " desequipó el arma.");
+        this.arma = null;
+    }
+
+    @Override
+    public void atacar(Criatura objetivo) {
+        int daño = fuerza * 2; // El dragón ataca con el doble de fuerza
+        if (arma != null) {
+            arma.atacarConArma(objetivo);
+            daño += arma.getDañoAdicional();
+        }
+        System.out.println("🐉 " + nombre + " ataca a " + objetivo.getNombre() + " con fuego! Daño: " + daño);
+        objetivo.defender(daño);
+    }
+
+    @Override
+    public void defender(int daño) {
+        // Las escamas reducen el daño un 20%
+        int dañoReducido = (int)(daño * 0.8);
+        salud -= dañoReducido;
+        System.out.println("🛡️ " + nombre + " usa sus escamas (" + escamas + ") y recibe solo " + dañoReducido + " de daño. Salud: " + salud);
+    }
+
+    @Override
+    public void volar() {
+        System.out.println("🐉 " + nombre + " despliega sus alas y ¡vuela!");
+    }
+
+    @Override
+    public void aterrizar() {
+        System.out.println("🐉 " + nombre + " aterriza con fuerza.");
+    }
+}
